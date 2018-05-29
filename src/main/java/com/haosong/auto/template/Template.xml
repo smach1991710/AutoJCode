@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.haosong.auto.template.TemplateDao" >
+
+	<!-- 实体映射 -->
+	<resultMap id="ModelResultMap" type="Template">
+		<attribute/>
+	</resultMap>
+	
+	<!-- 查询进件_查询条件   -->
+	<sql id="template_search_where_info" >
+		WHERE 1 = 1 
+		
+	</sql>
+	
+	<!-- 查询列表总数 -->
+	<select id="findTemplateCount" resultType="long">
+		SELECT count(*) FROM 表名 t 
+		<include refid="template_search_where_info" />
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="findTemplate" resultMap="ModelResultMap">
+		SELECT * FROM 表名 t 
+		
+		<include refid="template_search_where_info" />
+		
+		<if test="null != sort">
+			<if test="null != order">
+				ORDER BY ${sort} ${order} 
+			</if>
+		</if>
+		<if test="null != from">
+			limit #{from},#{size}
+		</if>
+	</select>
+	
+	<!-- 根据ID获取对象 -->
+	<select id="getTemplateById" resultMap="ModelResultMap" parameterType="java.lang.Long" >
+		SELECT * FROM 表名 where id = #{id}
+	</select>
+	
+	<!-- 创建对象 -->
+	<insert id="addTemplate" parameterType="Template" useGeneratedKeys="true" keyProperty="id">
+	    insert into `表名` (<dbNameList/>) 
+	    values
+	    (
+			<fieldNameList/>
+	    )
+	</insert>
+	
+   	<!-- 修改 -->
+	<update id="updateTemplate" parameterType="Template">
+		UPDATE 
+		  `表名` t
+		SET
+			
+		WHERE 
+		  t.`id` = #{id}
+	</update>
+</mapper>
